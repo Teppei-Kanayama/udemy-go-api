@@ -1,6 +1,8 @@
 package handlers
 
-import "net/http"
+import (
+	"net/http"
+)
 
 // RootHandler is something
 func RootHandler(arg1 http.ResponseWriter, arg2 *http.Request) {

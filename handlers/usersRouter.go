@@ -10,11 +10,10 @@ import (
 // UsersRooter is something
 func UsersRooter(w http.ResponseWriter, r *http.Request) {
 	path := strings.TrimSuffix(r.URL.Path, "/")
-
-	if path == "users/" {
+	if path == "/users" {
 		switch r.Method {
 		case http.MethodGet:
-			// usersGetAll(w, r)
+			usersGetAll(w, r)
 			return
 		case http.MethodPost:
 			return
