@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 
+	"github.com/Teppei-Kanayama/udemy-go-api/handlers"
 	"github.com/asdine/storm"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -104,10 +104,6 @@ func usersGetAll(w http.ResponseWriter, r *http.Request) {
 	postBodyResponse(w, http.StatusOK, jsonResponse{"users": users})
 }
 
-func postError(w http.ResponseWriter, code int) {
-	http.Error(w, http.StatusText(code), code)
-}
-
 func postBodyResponse(w http.ResponseWriter, code int, content jsonResponse) {
 	if content != nil {
 		js, err := json.Marshal(content)
@@ -119,45 +115,6 @@ func postBodyResponse(w http.ResponseWriter, code int, content jsonResponse) {
 		w.WriteHeader(code)
 		w.Write(js)
 		return
-	}
-}
-
-// UsersRooter is something
-func UsersRooter(w http.ResponseWriter, r *http.Request) {
-	path := strings.TrimSuffix(r.URL.Path, "/")
-
-	if path == "users/" {
-		switch r.Method {
-		case http.MethodGet:
-			usersGetAll(w, r)
-			return
-		case http.MethodPost:
-			return
-		default:
-			postError(w, http.StatusMethodNotAllowed)
-			return
-		}
-	}
-
-	path = strings.TrimSuffix(path, "/users/")
-	if !bson.IsObjectIdHex(path) {
-		postError(w, http.StatusNotFound)
-		return
-	}
-
-	// id := bson.ObjectIdHex(path)
-
-	switch r.Method {
-	case http.MethodGet:
-		return
-	case http.MethodPut:
-		return
-	case http.MethodPatch:
-		return
-	case http.MethodDelete:
-		return
-	default:
-		postError(w, http.StatusMethodNotAllowed)
 	}
 }
 
