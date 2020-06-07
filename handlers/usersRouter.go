@@ -9,7 +9,7 @@ import (
 
 // UsersRooter is something
 func UsersRooter(w http.ResponseWriter, r *http.Request) {
-	path := strings.TrimSuffix(r.URL.Path, "/")
+	path := strings.TrimSuffix(r.URL.Path, "/") //右端の "/"を削除する（/user/も/userも同じように扱える）
 	if path == "/users" {
 		switch r.Method {
 		case http.MethodGet:

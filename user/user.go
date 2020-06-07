@@ -24,13 +24,13 @@ var (
 )
 
 // All retrieves all users from the database
-func All() ([]User, error) {
+func All() ([]User, error) { // []Userは、要素がUser型のslice（Pythonで言うlist）
 	db, err := storm.Open(dbPath)
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
-	users := []User{}
+	defer db.Close()  // 遅延関数呼び出し（Allが終了する時に実行される）
+	users := []User{} // ここたぶんゆくゆくは変えていくんだろうね
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func Delete(id bson.ObjectId) error {
 }
 
 // Save updates or creates a given record in the database
-func (u *User) Save() error {
+func (u *User) Save() error { // *UserのメソッドとしてSave()を定義している
 	if err := u.validate(); err != nil {
 		return err
 	}
