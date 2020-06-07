@@ -161,21 +161,10 @@ func UsersRooter(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RootHandler is something
-func RootHandler(arg1 http.ResponseWriter, arg2 *http.Request) {
-	if arg2.URL.Path != "/" {
-		arg1.WriteHeader(http.StatusNotFound)
-		arg1.Write([]byte("Noot Found \n"))
-		return
-	}
-	arg1.WriteHeader(http.StatusOK)
-	arg1.Write([]byte("Okkkkkkkkkkkay!\n"))
-}
-
 func main() {
 	http.HandleFunc("/users/", UsersRooter)
 	http.HandleFunc("/users", UsersRooter)
-	http.HandleFunc("/", RootHandler)
+	http.HandleFunc("/", handlers.RootHandler)
 	err := http.ListenAndServe("localhost:11111", nil)
 	if err != nil {
 		fmt.Println(err)
