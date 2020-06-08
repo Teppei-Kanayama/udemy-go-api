@@ -29,8 +29,9 @@ func All() ([]User, error) { // []Userは、要素がUser型のslice（Pythonで
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()  // 遅延関数呼び出し（Allが終了する時に実行される）
-	users := []User{} // ここたぶんゆくゆくは変えていくんだろうね
+	defer db.Close() // 遅延関数呼び出し（Allが終了する時に実行される）
+	users := []User{}
+	err = db.All(&users)
 	if err != nil {
 		return nil, err
 	}
