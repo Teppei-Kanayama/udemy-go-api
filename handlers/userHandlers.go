@@ -41,6 +41,7 @@ func usersPostOne(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	u.ID = bson.NewObjectId()
+	err = u.Save()
 	if err != nil {
 		if err == user.ErrRecordInvalid {
 			postError(w, http.StatusBadRequest)
