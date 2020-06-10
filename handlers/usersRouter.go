@@ -24,7 +24,7 @@ func UsersRooter(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	path = strings.TrimSuffix(path, "/users/")
+	path = strings.TrimPrefix(path, "/users/")
 	if !bson.IsObjectIdHex(path) {
 		postError(w, http.StatusNotFound)
 		return
