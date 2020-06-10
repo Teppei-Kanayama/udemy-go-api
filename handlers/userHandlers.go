@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Teppei-Kanayama/udemy-go-api/user"
+	"github.com/asdine/storm"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -31,6 +32,18 @@ func usersGetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	postBodyResponse(w, http.StatusOK, jsonResponse{"users": users})
+}
+
+func usersGetOne(w http.ResponseWriter, _ *http.Request, id bson.ObjectId) {
+	u, err := user.One(id)
+	if err != nil {
+		if err == storm.ErrNotFound {
+			postError(w, http.StatusNotFound)
+			return
+		}
+		postError(w, http.StatusInternalServerError)
+	}
+	postBodyResponse(w, http.StatusOK, jsonResponse{"user": u})
 }
 
 func usersPostOne(w http.ResponseWriter, r *http.Request) {
